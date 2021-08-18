@@ -1,0 +1,48 @@
+﻿@* Verify you are using the right model
+    List implements IEnumerable interface
+*@
+@model IEnumerable<DotNetDrinks.Models.Product>
+
+@{
+    ViewData["Title"] = "Browse";
+}
+
+@if (ViewBag.category != null)
+{
+    <h1>@ViewBag.category</h1>
+}
+else
+{
+    <h1>Browse</h1>
+}
+
+@* To keep my design consistent *@
+<section class="row card-group">
+    @foreach (var product in Model)
+    {
+        <div class="col-sm-6 mb-3">
+            <div class="card mb-6 text-center h-100">
+                <div class="card-body">
+                    <a asp-controller="Products" 
+                       asp-action="Details" 
+                       asp-route-id="@product.Id">@product.Name</a>
+                    <h6>@product.Price.ToString("C")</h6>
+                    <p>@product.Brand</p>
+                    <img src="~/img/products/@product.Image"
+                         alt="Logo for @product.Name"
+                         class="img-thumbnail" />
+                    <form method="post" action="/Store/AddToCart">
+                        <input type="hidden" id="ProductId" name="ProductId" value="@product.Id" />
+                        <div class="form-group">
+                            <label class="form-control" for="Quantity">Quantity: </label>
+                            <input name="Quantity" id="Quantity" required 
+                                   type="number" min="1" max="999" />
+                        </div>
+                        <button class="btn btn-primary">Add to Cart</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    }
+</section>
+

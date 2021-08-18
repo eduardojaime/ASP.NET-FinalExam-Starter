@@ -1,0 +1,42 @@
+﻿@model IEnumerable<DotNetDrinks.Models.Brand>
+
+@{
+    ViewData["Title"] = "Brands";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Brands</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table sortable">
+    <thead>
+        <tr>
+            <th>
+                <a href="#">@Html.DisplayNameFor(model => model.Name)</a>
+            </th>
+            <th>
+                <a href="#">@Html.DisplayNameFor(model => model.YearFounded)</a>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.YearFounded)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,0 +1,61 @@
+﻿@model IEnumerable<DotNetDrinks.Models.Cart>
+
+@{
+    ViewData["Title"] = "Cart";
+}
+
+<h1>My Shopping Cart</h1>
+
+<table class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Product)
+            </th>
+            <th></th>
+            <th>
+                @Html.DisplayNameFor(model => model.Quantity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <a asp-controller="Products"
+                       asp-action="Details"
+                       asp-route-id="@item.ProductId">
+                        @item.Product.Name
+                    </a>
+                </td>
+                <td>
+                    @* ADD IMG HERE *@
+                </td>
+                @* As a general rule, numbers are right-aligned when shown in a table *@
+                <td class="text-right">
+                    @Html.DisplayFor(modelItem => item.Quantity)
+                </td>
+                <td class="text-right">
+                    @* use generic C format provider to format decimal to currency *@
+                    @item.Price.ToString("C")
+                </td>
+                <td>
+                    @* asp-controller by default is the same as the folder where view is *@
+                    <a asp-action="RemoveFromCart" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+        <tr>
+            <td colspan="4" class="text-right">@ViewBag.TotalAmount</td>
+            <td>
+                <a class="btn btn-primary" asp-action="Index">Continue Shopping</a>
+                <a class="btn btn-success" asp-action="Checkout">Checkout</a>
+            </td>
+        </tr>
+    </tbody>
+</table>

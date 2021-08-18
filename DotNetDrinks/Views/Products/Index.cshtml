@@ -1,0 +1,73 @@
+﻿@model IEnumerable<DotNetDrinks.Models.Product>
+
+@{
+    ViewData["Title"] = "Products";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Products</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table sortable table-striped table-hover">
+    <thead>
+        <tr>
+            <th>
+                <a href="#">@Html.DisplayNameFor(model => model.Name)</a>
+            </th>
+            <th>
+                <a href="#">@Html.DisplayNameFor(model => model.Price)</a>
+            </th>
+            <th>
+                <a href="#">@Html.DisplayNameFor(model => model.Stock)</a>
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Image)
+            </th>
+            <th>
+                <a href="#">@Html.DisplayNameFor(model => model.Brand)</a>
+            </th>
+            <th>
+                <a href="#">@Html.DisplayNameFor(model => model.Category)</a>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Stock)
+            </td>
+            <td>
+                @if (item.Image != null)
+                {
+                    <img src="~/img/products/@item.Image" alt="Product Image" class="img-thumbnail" />
+                }
+                else
+                {
+                    <img src="~/img/products/placeholder.gif" alt="Product Image" class="img-thumbnail" />
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Brand.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category.Name)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

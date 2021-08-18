@@ -1,0 +1,53 @@
+﻿<!-- Reference the API at the top of your page -->
+<script src="https://js.stripe.com/v3/"></script>
+
+<h1>Confirm Payment Amount</h1>
+
+@* Add Stripe script tag *@
+<!--<script src="https://checkout.stripe.com/checkout.js"
+        class="stripe-button"
+        data-key="@ViewBag.PublishableKey"
+        data-amount="@ViewBag.Total"
+        data-name="DotNetDrinks Store"
+        data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+        data-locale="auto"
+        data-currency="cad"></script>-->
+
+@* Add a new button and javascript code to handle this redirect to Stripe *@
+<section>
+    <h4>Order Total: @((ViewBag.Total/100).ToString("C"))</h4>
+    <button id="checkout-button" class="btn btn-primary">Process Payment</button>
+</section>
+
+<!-- This code will handle the call to Stripe -->
+<script type="text/javascript">
+    // Create an instance of the Stripe object with your publishable API key
+    var stripe = Stripe("@ViewBag.PublishableKey");
+
+    var checkoutButton = document.getElementById("checkout-button");
+
+    checkoutButton.addEventListener("click", function () {
+        // this is us > POST /Store/Payment
+        fetch("/Store/Payment", {
+        method: "POST"
+        })
+        .then(function (response) {
+          return response.json();
+        })
+          .then(function (session) {
+            // This is them
+          return stripe.redirectToCheckout({ sessionId: session.id });
+        })
+        .then(function (result) {
+          // If redirectToCheckout fails due to a browser or network
+          // error, you should display the localized error message to your
+          // customer using error.message.
+          if (result.error) {
+            alert(result.error.message);
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    });
+</script>
