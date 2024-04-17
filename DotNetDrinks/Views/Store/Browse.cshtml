@@ -23,19 +23,28 @@ else
         <div class="col-sm-6 mb-3">
             <div class="card mb-6 text-center h-100">
                 <div class="card-body">
-                    <a asp-controller="Products" 
-                       asp-action="Details" 
+                    <a asp-controller="Products"
+                       asp-action="Details"
                        asp-route-id="@product.Id">@product.Name</a>
                     <h6>@product.Price.ToString("C")</h6>
                     <p>@product.Brand</p>
-                    <img src="~/img/products/@product.Image"
-                         alt="Logo for @product.Name"
-                         class="img-thumbnail" />
+                    @if (String.IsNullOrEmpty(product.Image))
+                    {
+                        <img src="~/img/products/drinks-placeholder.png"
+                             alt="Placeholder Image for @product.Name"
+                             class="img-thumbnail" />
+                    }
+                    else
+                    {
+                        <img src="~/img/products/@product.Image"
+                             alt="Logo for @product.Name"
+                             class="img-thumbnail" />
+                    }
                     <form method="post" action="/Store/AddToCart">
                         <input type="hidden" id="ProductId" name="ProductId" value="@product.Id" />
                         <div class="form-group">
                             <label class="form-control" for="Quantity">Quantity: </label>
-                            <input name="Quantity" id="Quantity" required 
+                            <input name="Quantity" id="Quantity" required
                                    type="number" min="1" max="999" />
                         </div>
                         <button class="btn btn-primary">Add to Cart</button>

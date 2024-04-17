@@ -32,8 +32,13 @@
             <div class="form-group">
                 <label asp-for="Image" class="control-label"></label>
                 <input asp-for="Image" class="form-control" type="file" />
-                @if (Model.Image != null) {
+                @if (Model.Image != null)
+                {
                     <img src="~/img/products/@Model.Image" alt="Product Image" class="img-thumbnail" />
+                }
+                else
+                {
+                    <img src="~/img/products/drinks-placeholder.png" alt="Product Image" class="img-thumbnail" />
                 }
                 <span asp-validation-for="Image" class="text-danger"></span>
             </div>
@@ -59,5 +64,7 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
