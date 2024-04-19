@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -15,6 +16,7 @@ namespace DotNetDrinks.Models
         public int OrderId { get; set; }
 
         public int Quantity { get; set; }
+        [DisplayName("Unit Price")]
         public decimal Price { get; set; }
 
         // navigation virtual properties

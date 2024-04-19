@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -12,7 +14,8 @@ namespace DotNetDrinks.Models
         public int ProductId { get; set; }
         // how can I identify an anonymous user? Random GUID
         // where to store that GUID so that we can identify browsers? Session 
-        public string CustomerId { get; set; } 
+        public string CustomerId { get; set; }
+        [DisplayName("Unit Price")]
         public decimal Price { get; set; }
         public DateTime DateCreated { get; set; }
 

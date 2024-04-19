@@ -73,7 +73,7 @@ namespace DotNetDrinks.Controllers
             {
                 ProductId = ProductId,
                 Quantity = Quantity,
-                Price = price * Quantity,
+                Price = price,
                 DateCreated = DateTime.UtcNow, // returns date time in UTC timezone
                 CustomerId = customerId
             };
@@ -96,7 +96,7 @@ namespace DotNetDrinks.Controllers
                         .ToList();
 
             // CALCULATE TOTAL AND PASS AS A VIEWBAG FIELD
-            var total = cart.Sum(c => c.Price);
+            var total = cart.Sum(c => c.Price * c.Quantity);
             ViewBag.TotalAmount = total.ToString("C");
 
             return View(cart);
@@ -134,7 +134,7 @@ namespace DotNetDrinks.Controllers
             // calculate total amount
             var cartCustomerId = GetCustomerId();
             var cartItems = _context.Carts.Where(c => c.CustomerId == cartCustomerId).ToList();
-            order.Total = cartItems.Sum(c => c.Price);
+            order.Total = cartItems.Sum(c => c.Price * c.Quantity);
 
             // Store order object in session and
             // Implement a nuget package

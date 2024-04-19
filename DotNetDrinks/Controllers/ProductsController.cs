@@ -113,7 +113,7 @@ namespace DotNetDrinks.Controllers
             }
             ViewData["BrandId"] = new SelectList(_context.Brands.OrderBy(b => b.Name), "Id", "Name", product.BrandId);
             ViewData["CategoryId"] = new SelectList(_context.Categories.OrderBy(c => c.Name), "Id", "Name", product.CategoryId);
-            return View(product);
+            return View("Edit", product);
         }
 
         // POST: Products/Edit/5
